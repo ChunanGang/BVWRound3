@@ -62,7 +62,7 @@ public class BulletController : MonoBehaviour
         }
         else if (col.gameObject.CompareTag("player1"))
         {
-            player1.doDamage(bulletsDMG[bulletType]);
+            player1.heal(bulletsDMG[bulletType]);
             Destroy(gameObject);
         }
         else if (col.gameObject.CompareTag("player2"))
