@@ -11,7 +11,6 @@ public class BossController : MonoBehaviour
     // game logic
     public float maxHP;
     private float curHP;
-    //Will change here later
     private int currentBulletType = 1;
 
     // Start is called before the first frame update

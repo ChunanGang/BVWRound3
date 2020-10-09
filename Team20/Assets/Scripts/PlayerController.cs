@@ -55,10 +55,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void heal(float healAmount){
+        float updatedHPTemp = curHP + healAmount;
+        Debug.Log(updatedHPTemp);
+        if(updatedHPTemp > maxHP){
+            curHP = maxHP;
+        }
+        else{
+            curHP = updatedHPTemp;
+        }
+    }
     // do damage to player
     public void doDamage(float dmg)
     {
-        curHP -= dmg;
+        if(curHP > dmg){
+            curHP -= dmg;
+        }
+        else{
+            Debug.Log("This player is dead. ");
+        }
         StartCoroutine(damaged());
     }
 
