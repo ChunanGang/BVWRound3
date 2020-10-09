@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2605489671319707537}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.39, y: 0.016817277, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.8547209, w: 0.5190879}
+  m_LocalPosition: {x: -7.996, y: -0.969, z: 0}
+  m_LocalScale: {x: 0.72941643, y: 0.6857333, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -117.45801}
 --- !u!212 &3092763572220526478
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 658e3cbaebcabe54fa3484bc714c9df5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d8b2d680ba7982545908c819018d2a43, type: 3}
   m_Color: {r: 0.8773585, g: 0.4262638, b: 0.4262638, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BulletSprites:
-  - {fileID: 21300000, guid: 658e3cbaebcabe54fa3484bc714c9df5, type: 3}
+  - {fileID: 21300000, guid: d8b2d680ba7982545908c819018d2a43, type: 3}
   bulletsDMG:
   - 5
   bullet0Speed: 10
@@ -117,7 +117,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.3303226, y: 0.32}
+    oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 0.3303226, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
