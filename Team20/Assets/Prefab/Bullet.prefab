@@ -97,7 +97,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletSprites:
   - {fileID: 21300000, guid: d8b2d680ba7982545908c819018d2a43, type: 3}
+  - {fileID: 21300000, guid: d8b2d680ba7982545908c819018d2a43, type: 3}
   bulletsDMG:
+  - 5
   - 5
   bullet0Speed: 10
 --- !u!61 &6430560065644158001

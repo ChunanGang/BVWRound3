@@ -6,10 +6,12 @@ public class BulletController : MonoBehaviour
 {
     // ref
     private BossController boss;
+    private PlayerController player1; 
+    private PlayerController player2;
     public Sprite[] BulletSprites;
 
     // game logic
-    private int bulletType = -1; // we will have diff typesof bullet. -1 means no type set yet
+    private int bulletType = -1; // we will have diff typesof bullet. -1 means no type set yet; boss have type 1
 
     // ----------- BULLETS ----------
     public float[] bulletsDMG;
@@ -19,6 +21,8 @@ public class BulletController : MonoBehaviour
     private void Start()
     {
         boss = GameObject.Find("Boss").GetComponent<BossController>();
+        player1 = GameObject.Find("player1").GetComponent<PlayerController>();
+        player2 = GameObject.Find("player2").GetComponent<PlayerController>();
     }
     void Update()
     {
@@ -39,6 +43,9 @@ public class BulletController : MonoBehaviour
     {
         if (bulletType == 0)
             transform.Translate(Vector3.right * bullet0Speed * Time.deltaTime);
+        else if(bulletType == 1){
+            transform.Translate(-1 * Vector3.right * bullet0Speed * Time.deltaTime);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -51,6 +58,16 @@ public class BulletController : MonoBehaviour
         else if (col.gameObject.CompareTag("Boss"))
         {
             boss.doDamage(bulletsDMG[bulletType]);
+            Destroy(gameObject);
+        }
+        else if (col.gameObject.CompareTag("player1"))
+        {
+            player1.doDamage(bulletsDMG[bulletType]);
+            Destroy(gameObject);
+        }
+        else if (col.gameObject.CompareTag("player2"))
+        {
+            player2.doDamage(bulletsDMG[bulletType]);
             Destroy(gameObject);
         }
     }
