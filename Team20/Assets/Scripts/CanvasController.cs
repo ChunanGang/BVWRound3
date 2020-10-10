@@ -18,7 +18,8 @@ public class CanvasController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("Canvas here");
+        audioController.AC.PlayBgm("bgm");
     }
 
     // Update is called once per frame
