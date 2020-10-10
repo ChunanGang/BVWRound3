@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private int currentBulletType = 0;
     public float maxHP;
     private float curHP;
+    private int bulletLeft; // how many bullet lefy (-1 means infinite)
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,14 @@ public class PlayerController : MonoBehaviour
     // this function will be called in gameManager.cs
     public void attack()
     {
+        // check how many bullets left
+        if (bulletLeft == 0) {
+            // stwitch back to back attack if no bullet left
+            bulletLeft = -1;
+            currentBulletType = 0;
+        }
+        if(bulletLeft > 0)
+            bulletLeft--;
         // gen bullet at player's location
         Vector3 pos = transform.position + new Vector3(0.5f,0,0);
         Quaternion rotation = transform.rotation;
@@ -65,6 +74,15 @@ public class PlayerController : MonoBehaviour
             curHP = updatedHPTemp;
         }
     }
+
+    // change the curBullet type of the player (called when hit by an item) 
+    public void changeBullet(int type, int bulletAmount)
+    {
+        print("---change to bullt" + type);
+        currentBulletType = type;
+        bulletLeft = bulletAmount;
+    }
+
     // do damage to player
     public void doDamage(float dmg)
     {
@@ -72,10 +90,11 @@ public class PlayerController : MonoBehaviour
             curHP -= dmg;
         }
         else{
-            Debug.Log("This player is dead. ");
+            //Debug.Log("This player is dead. ");
         }
         StartCoroutine(damaged());
     }
+
 
     // change the color to red for a short period (used when dmged)
     IEnumerator damaged()

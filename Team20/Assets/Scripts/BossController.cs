@@ -7,6 +7,7 @@ public class BossController : MonoBehaviour
     // ref
     public SpriteRenderer bossSprite;
     public GameObject bulletPrefab;
+    public Manager manager;
 
     // game logic
     public float maxHP;
@@ -50,19 +51,24 @@ public class BossController : MonoBehaviour
     	//Direction constant, 1 up, -1 down
     	int curDirection = 1;
     	while(curHP > 0){
-        	if(curDirection == 1){
-        		transform.position = transform.position + new Vector3(0,1,0);
-        	}
-        	else{
-        		transform.position = transform.position + new Vector3(0,-1,0);
-        	}
-        	//gen bullet at boss's location
-        	Vector3 pos = transform.position - new Vector3(3f,0,0);
-        	Quaternion rotation = transform.rotation;
-        	yield return new WaitForSeconds(.8f);
-        	GameObject bullet = Instantiate(bulletPrefab, pos, rotation);
-        	bullet.GetComponent<BulletController>().setType(currentBulletType);
-        	curDirection = curDirection * (-1);
+            if (manager.gameStarted)
+            {
+                if (curDirection == 1)
+                {
+                    transform.position = transform.position + new Vector3(0, 1, 0);
+                }
+                else
+                {
+                    transform.position = transform.position + new Vector3(0, -1, 0);
+                }
+                //gen bullet at boss's location
+                Vector3 pos = transform.position - new Vector3(3f, 0, 0);
+                Quaternion rotation = transform.rotation;
+                GameObject bullet = Instantiate(bulletPrefab, pos, rotation);
+                bullet.GetComponent<BulletController>().setType(currentBulletType);
+                curDirection = curDirection * (-1);
+            }
+            yield return new WaitForSeconds(.8f);
         }
     }
 

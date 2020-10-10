@@ -13,9 +13,14 @@ public class ItemController : MonoBehaviour
     private int itemType = -1; // we will have diff typesof bullet. -1 means no type set yet; boss have type 1
 
     // ----------- itemHealEffect ----------
-    public float[] itemHeal;
-    // bullet 0: normal bullet
+    // item 0: heal
+    public float item0Heal;
     public float item0Speed;
+    // item 1: differny weapon
+    public float item1Speed;
+    public float item1BulletAmount; // how many time can the player use (attacks)
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +41,10 @@ public class ItemController : MonoBehaviour
         if (itemType == 0){
             transform.Translate(-1 * Vector3.right * item0Speed * Time.deltaTime);
         }
+        if (itemType == 1)
+        {
+            transform.Translate(-1 * Vector3.right * item1Speed * Time.deltaTime);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -43,16 +52,26 @@ public class ItemController : MonoBehaviour
         if (col.gameObject.CompareTag("player1"))
         {
             //Debug.Log("Player1 object detected, object type: " + itemType);
+            // heal
             if(itemType == 0){
-            	player1.heal(itemHeal[itemType]);
+            	player1.heal(item0Heal);
+            }
+            else if (itemType == 1)
+            {
+                player1.changeBullet(2, 5);
             }
             Destroy(gameObject);
         }
         else if (col.gameObject.CompareTag("player2"))
         {
             //Debug.Log("Player2 item detected, object type: " + itemType);
+            // heal
             if(itemType == 0){
-            	player2.heal(itemHeal[itemType]);
+            	player2.heal(item0Heal);
+            }
+            else if (itemType == 1)
+            {
+                player2.changeBullet(2, 5);
             }
             Destroy(gameObject);
         }

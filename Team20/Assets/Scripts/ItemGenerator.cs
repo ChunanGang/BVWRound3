@@ -9,7 +9,9 @@ public class ItemGenerator : MonoBehaviour
     public GameObject itemPrefab;
 
     // game logic
-    private int currentItemType = 0;
+    public int itemAmount; //  how many types of items
+    public float genItemInterval;
+    private int currentItemType = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +38,13 @@ public class ItemGenerator : MonoBehaviour
         	//gen item at the correct location
         	//Vector3 pos = transform.position - (curDirection * new Vector3(3f,0,0));
         	Quaternion rotation = transform.rotation;
-        	yield return new WaitForSeconds(2.5f);
+        	yield return new WaitForSeconds(genItemInterval);
         	GameObject item = Instantiate(itemPrefab, transform.position, rotation);
         	item.GetComponent<ItemController>().setType(currentItemType);
         	curDirection = curDirection * (-1);
+
+            // randomly decide the next item type
+            currentItemType = Random.Range(0, itemAmount);
         }
     }
 }

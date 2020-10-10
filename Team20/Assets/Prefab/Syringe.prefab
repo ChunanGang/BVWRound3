@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7092236952436810171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.522, y: -1.498, z: 0}
+  m_LocalScale: {x: 0.4053052, y: 0.41495273, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,10 +96,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemSprites:
+  - {fileID: 21300000, guid: 886dea8f319ac114eb361ee23e92c277, type: 3}
   - {fileID: 21300000, guid: d8b2d680ba7982545908c819018d2a43, type: 3}
-  itemHeal:
-  - 10
+  item0Heal: 10
   item0Speed: 10
+  item1Speed: 10
+  item1BulletAmount: 5
 --- !u!61 &-4820452353968756374
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -113,7 +115,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.11452365, y: -0.52911747}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -124,5 +126,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.12, y: 5.12}
+  m_Size: {x: 1.5918047, y: 2.9721687}
   m_EdgeRadius: 0

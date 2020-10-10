@@ -7,8 +7,14 @@ using Newtonsoft.Json.Linq;
 
 public class Manager : MonoBehaviour
 {
-	// Game data
+	// ref
 	public PlayerController [] players;
+	public CanvasController canvas;
+
+	// game logic 
+	public bool gameStarted = false;
+	public bool player1Ready = false;
+	public bool player2Ready = false;
 
 #if !DISABLE_AIRCONSOLE
 
@@ -32,13 +38,14 @@ public class Manager : MonoBehaviour
 	{
 		if (AirConsole.instance.GetActivePlayerDeviceIds.Count == 0)
 		{
-			if (AirConsole.instance.GetControllerDeviceIds().Count >= 2)
+			if (AirConsole.instance.GetControllerDeviceIds().Count < 2)
 			{
-				startGame();
+				canvas.setGameInfo("Need 2 players");
 			}
 			else
 			{
-				print( "NEED MORE PLAYERS");
+				AirConsole.instance.SetActivePlayers(2);
+				canvas.setGameInfo("Press A to get ready");
 			}
 		}
 	}
@@ -52,16 +59,21 @@ public class Manager : MonoBehaviour
 		int active_player = AirConsole.instance.ConvertDeviceIdToPlayerNumber(device_id);
 		if (active_player != -1)
 		{
+			// enough players reset let let them get ready
 			if (AirConsole.instance.GetControllerDeviceIds().Count >= 2)
 			{
-				startGame();
+				AirConsole.instance.SetActivePlayers(2);
+				canvas.setGameInfo("Press A to get ready");
 			}
 			else
 			{
 				AirConsole.instance.SetActivePlayers(0);
-				//ResetBall(false);
-				print("PLAYER LEFT - will reste game and wait for enough players");
+				gameStarted = false;
+				canvas.setGameInfo("PlayerLeft. Waiiting for more Plyers");
 			}
+			gameStarted = false;
+			player1Ready = false;
+			player2Ready = false;
 		}
 	}
 
@@ -74,7 +86,6 @@ public class Manager : MonoBehaviour
 	void OnMessage(int device_id, JToken data)
 	{
 		int active_player = AirConsole.instance.ConvertDeviceIdToPlayerNumber(device_id);
-		//print(data);
 		// check player valid
 		if (active_player != -1)
 		{
@@ -86,9 +97,27 @@ public class Manager : MonoBehaviour
 				// press
 				else
 				{
-					// attack
+					// attack button
 					if ((float)data["data"]["attack"] == 1)
-						players[active_player].attack();
+					{
+						// use for player ready
+						if (!gameStarted)
+						{
+							if (active_player == 0 && !player1Ready)
+								player1Ready = true;
+							else if (active_player == 1 && !player2Ready)
+								player2Ready = true;
+							// start game if both ready
+							if (player1Ready && player2Ready)
+							{
+								gameStarted = true;
+								canvas.setGameInfo("");
+							}
+						}
+						// attck in game
+						else
+							players[active_player].attack();
+					}
 					// movement
 					else
 						players[active_player].move((float)data["data"]["move"]);
@@ -98,23 +127,6 @@ public class Manager : MonoBehaviour
 		}
 	}
 
-	void startGame()
-	{
-		AirConsole.instance.SetActivePlayers(2);
-		UpdateScoreUI();
-	}
-
-
-	void UpdateScoreUI()
-	{
-		
-	}
-
-	void FixedUpdate()
-	{
-
-		
-	}
 
 	void OnDestroy()
 	{
