@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
+        curHP = maxHP;
     }
    
     // this function will be called in gameManager.cs
@@ -102,6 +103,10 @@ public class PlayerController : MonoBehaviour
         playerSprite.color = Color.red;
         yield return new WaitForSeconds(.05f);
         playerSprite.color = Color.white;
+    }
+
+    public float getHP(){
+        return curHP;
     }
 
 }

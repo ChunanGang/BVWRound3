@@ -8,12 +8,16 @@ public class CanvasController : MonoBehaviour
 {
 
     public BossController boss;
+    public PlayerController player1; 
+    public PlayerController player2;
     public Manager manager;
     public TextMeshProUGUI infoText;
     public TextMeshProUGUI gamePausedText;
     public TextMeshProUGUI player1ReadyText;
     public TextMeshProUGUI player2ReadyText;
     public Image bossHPTop;
+    public Image player1HPTop; 
+    public Image player2HPTop;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +36,8 @@ public class CanvasController : MonoBehaviour
     void updateHP()
     {
         bossHPTop.fillAmount = boss.getHP() / boss.maxHP;
+        player1HPTop.fillAmount = player1.getHP() / player1.maxHP;
+        player2HPTop.fillAmount = player2.getHP() / player2.maxHP; 
     }
     void updateReady()
     {

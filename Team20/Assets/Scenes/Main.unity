@@ -728,7 +728,7 @@ MonoBehaviour:
     type: 3}
   playerSprite: {fileID: 844522219}
   moveSpeed: 5
-  maxHP: 0
+  maxHP: 200
 --- !u!4 &150734607
 Transform:
   m_ObjectHideFlags: 0
@@ -875,12 +875,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss: {fileID: 1439637909}
+  player1: {fileID: 267628316}
+  player2: {fileID: 150734606}
   manager: {fileID: 780533797}
   infoText: {fileID: 270163120}
   gamePausedText: {fileID: 492060550}
   player1ReadyText: {fileID: 79007014}
   player2ReadyText: {fileID: 2011130974}
   bossHPTop: {fileID: 107189061}
+  player1HPTop: {fileID: 78344211}
+  player2HPTop: {fileID: 1329236152}
 --- !u!114 &182214705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1176,7 +1180,7 @@ MonoBehaviour:
     type: 3}
   playerSprite: {fileID: 1950261896}
   moveSpeed: 5
-  maxHP: 0
+  maxHP: 200
 --- !u!82 &267628317
 AudioSource:
   m_ObjectHideFlags: 0
