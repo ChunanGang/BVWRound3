@@ -15,19 +15,24 @@ public class audioController : MonoBehaviour
     private Dictionary<string, AudioClip> sounds;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         AC = this;
+
+        bgm = GetComponents<AudioSource>()[0];
         bgm.loop = true;
+        player1 = GetComponents<AudioSource>()[1];
         player1.loop = false;
+        player2 = GetComponents<AudioSource>()[2];
         player2.loop = false;
+        boss = GetComponents<AudioSource>()[3];
         boss.loop = false;
 
 
         bgm = GetComponents<AudioSource>()[0];
         bgm.loop = true;
         sounds = new Dictionary<string, AudioClip>();
-        sounds.Add("bgm", Resources.Load("windowbgm", typeof(AudioClip)) as AudioClip);
+        sounds.Add("bgm", Resources.Load("bgm/windowbgm", typeof(AudioClip)) as AudioClip);
         sounds.Add("player1Ult", Resources.Load("Chatacter1_ULT", typeof(AudioClip)) as AudioClip);
         sounds.Add("player2Ult", Resources.Load("Chatacter2_ULT", typeof(AudioClip)) as AudioClip);
         sounds.Add("player1Att", Resources.Load("Chatacter1_Attact", typeof(AudioClip)) as AudioClip);
@@ -62,9 +67,7 @@ public class audioController : MonoBehaviour
     }
 
     public void PlayBgm(string soundID, float vol = 0.5f){
-    	Debug.Log("bgm here");
     	AudioClip clip = sounds[soundID];
-    	Debug.Log(clip);
         bgm.PlayOneShot(clip, vol);
     }
 
