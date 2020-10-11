@@ -73,10 +73,10 @@ public class CanvasController : MonoBehaviour
             playingVideo = false;
             StartCoroutine(fadeToStageTwo());
         }
-        // if(Input.GetMouseButtonDown(0) == true)
-        // {
-        //     audioController.AC.PlayBgm("mouseClick");;
-        // } 
+        if(Input.GetMouseButtonDown(0) == true)
+        {
+            audioController.AC.PlayBgm("mouseClick");;
+        } 
     }
 
     // update everyone 's HP here (boss, players)
