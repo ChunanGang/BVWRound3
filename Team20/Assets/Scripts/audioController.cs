@@ -68,6 +68,7 @@ public class audioController : MonoBehaviour
     }
 
     public void PlayBgm(string soundID, float vol = 0.5f){
+        bgm.Stop();
     	AudioClip clip = sounds[soundID];
         bgm.PlayOneShot(clip, vol);
     }

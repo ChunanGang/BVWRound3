@@ -101,7 +101,6 @@ public class CanvasController : MonoBehaviour
         if (!manager.gameStarted)
             gamePausedText.SetText("Game Paused");
         else
-            audioController.AC.PlayBgm("gamebgm");
             gamePausedText.SetText("");
     }
 
@@ -168,6 +167,8 @@ public class CanvasController : MonoBehaviour
         startAnim.Stop();
         startAnim.gameObject.SetActive(false);
         gameStageCover.SetActive(false);
+        audioController.AC.PlayBgm("gamebgm");
+
         // enable game ui 
         foreach (GameObject obj in gameUI)
         {
