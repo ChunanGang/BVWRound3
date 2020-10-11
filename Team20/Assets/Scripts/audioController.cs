@@ -28,10 +28,17 @@ public class audioController : MonoBehaviour
         sounds.Add("player1Ult", Resources.Load("Character1_ULT", typeof(AudioClip)) as AudioClip);
         sounds.Add("player2Ult", Resources.Load("Character2_ULT", typeof(AudioClip)) as AudioClip);
         sounds.Add("player1Att", Resources.Load("Character1_Attact", typeof(AudioClip)) as AudioClip);
-        sounds.Add("player2Att", Resources.Load("Character2_Get", typeof(AudioClip)) as AudioClip);
+        sounds.Add("player2Collect", Resources.Load("Character2_Get", typeof(AudioClip)) as AudioClip);
         sounds.Add("itemCollect", Resources.Load("Get_ULT", typeof(AudioClip)) as AudioClip);
         sounds.Add("mouseClick", Resources.Load("Mouse_Click", typeof(AudioClip)) as AudioClip);
         sounds.Add("mouseMove", Resources.Load("Mouse_Move", typeof(AudioClip)) as AudioClip);
+        sounds.Add("bossDie", Resources.Load("BossDie", typeof(AudioClip)) as AudioClip);
+        sounds.Add("characterAttacked", Resources.Load("Character_Attacked", typeof(AudioClip)) as AudioClip);
+        sounds.Add("enemyBossAttacked", Resources.Load("EnemyBoss_Attacked", typeof(AudioClip)) as AudioClip);
+        sounds.Add("enemyBossBullet", Resources.Load("EnemyBoss_Bullet", typeof(AudioClip)) as AudioClip);
+        sounds.Add("enemyDie", Resources.Load("EnemyDie", typeof(AudioClip)) as AudioClip);
+        sounds.Add("tutorialbgm", Resources.Load("TutorialBGM_Loop", typeof(AudioClip)) as AudioClip);
+        sounds.Add("gamebgm", Resources.Load("GameBGM_Loop", typeof(AudioClip)) as AudioClip);
         bgm.clip = sounds["bgm"];
     }
 

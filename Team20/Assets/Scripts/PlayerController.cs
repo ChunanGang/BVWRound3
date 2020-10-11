@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         }
         else if(gameObject.tag == "player2"){
             if(currentBulletType == 0){
-                audioController.AC.PlayPlayer2("player2Att");
+                audioController.AC.PlayPlayer2("player2Collect");
             }
             else if(currentBulletType == 2){
                 audioController.AC.PlayPlayer2("player2Ult");
@@ -156,6 +156,12 @@ public class PlayerController : MonoBehaviour
     // change the color to red for a short period (used when dmged)
     IEnumerator damaged()
     {
+        if(gameObject.tag == "player2"){
+            audioController.AC.PlayPlayer2("characterAttacked");
+        }
+        else if(gameObject.tag == "player1"){
+            audioController.AC.PlayPlayer1("characterAttacked");
+        }
         playerSprite.color = Color.red;
         yield return new WaitForSeconds(.05f);
         playerSprite.color = Color.white;

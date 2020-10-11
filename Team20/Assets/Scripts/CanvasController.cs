@@ -101,6 +101,7 @@ public class CanvasController : MonoBehaviour
         if (!manager.gameStarted)
             gamePausedText.SetText("Game Paused");
         else
+            audioController.AC.PlayBgm("gamebgm");
             gamePausedText.SetText("");
     }
 

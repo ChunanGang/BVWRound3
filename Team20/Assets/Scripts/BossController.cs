@@ -14,6 +14,7 @@ public class BossController : MonoBehaviour
     private float curHP;
     private int currentBulletType = 1;
 
+    private bool deathAudioPlayed = false; 
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,13 @@ public class BossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (manager.gameStarted){
+            if(curHP <= 0){
+                if(!deathAudioPlayed){
+                    audioController.AC.PlayBoss("bossDie");
+                }
+            }
+        }
     }
 
     public float getHP()
@@ -65,6 +72,7 @@ public class BossController : MonoBehaviour
                 Vector3 pos = transform.position - new Vector3(3f, 0, 0);
                 Quaternion rotation = transform.rotation;
                 GameObject bullet = Instantiate(bulletPrefab, pos, rotation);
+                audioController.AC.PlayBoss("enemyBossBullet");
                 bullet.GetComponent<BulletController>().setType(currentBulletType);
                 curDirection = curDirection * (-1);
             }
