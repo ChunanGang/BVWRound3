@@ -75,9 +75,9 @@ public class PlayerController : MonoBehaviour
         Vector3 pos = transform.position + new Vector3(0.5f,0,0);
         Quaternion rotation = transform.rotation;
         //attack audio
-        Debug.Log("bullet type" + currentBulletType);
+        //Debug.Log("bullet type" + currentBulletType);
         if(gameObject.tag == "player1"){
-            Debug.Log("Here! inside player1");
+            //Debug.Log("Here! inside player1");
             if(currentBulletType == 0){
                 audioController.AC.PlayPlayer1("player1Att");
             }

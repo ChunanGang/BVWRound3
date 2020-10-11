@@ -54,10 +54,12 @@ public class ItemController : MonoBehaviour
         {
             // heal
             if(itemType == 0){
+                audioController.AC.PlayPlayer1("itemCollect");
             	player1.heal(item0Heal);
             }
             else if (itemType == 1)
             {
+                audioController.AC.PlayPlayer1("itemCollect");
                 player1.changeBullet(2, item1BulletAmount);
             }
             Destroy(gameObject);
@@ -66,10 +68,12 @@ public class ItemController : MonoBehaviour
         {
             // heal
             if(itemType == 0){
+                audioController.AC.PlayPlayer2("itemCollect");
             	player2.heal(item0Heal);
             }
             else if (itemType == 1)
             {
+                audioController.AC.PlayPlayer2("itemCollect");
                 player2.changeBullet(2, item1BulletAmount);
             }
             Destroy(gameObject);
