@@ -18,7 +18,7 @@ public class ItemController : MonoBehaviour
     public float item0Speed;
     // item 1: differny weapon
     public float item1Speed;
-    public float item1BulletAmount; // how many time can the player use (attacks)
+    public int item1BulletAmount; // how many time can the player use (attacks)
 
 
     // Start is called before the first frame update
@@ -47,37 +47,36 @@ public class ItemController : MonoBehaviour
         }
     }
 
+    // player collect the item
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("player1"))
         {
-            //Debug.Log("Player1 object detected, object type: " + itemType);
             // heal
             if(itemType == 0){
             	player1.heal(item0Heal);
             }
             else if (itemType == 1)
             {
-                player1.changeBullet(2, 5);
+                player1.changeBullet(2, item1BulletAmount);
             }
             Destroy(gameObject);
         }
         else if (col.gameObject.CompareTag("player2"))
         {
-            //Debug.Log("Player2 item detected, object type: " + itemType);
             // heal
             if(itemType == 0){
             	player2.heal(item0Heal);
             }
             else if (itemType == 1)
             {
-                player2.changeBullet(2, 5);
+                player2.changeBullet(2, item1BulletAmount);
             }
             Destroy(gameObject);
         }
     }
 
-    // type will be set in playerController's attack fucntion, when item is created
+    // type will be set in gnerator, when item is created
     public void setType(int type)
     {
         itemType = type;

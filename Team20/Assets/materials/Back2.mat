@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Background
+  m_Name: Back2
   m_Shader: {fileID: 4800000, guid: 8247e1f59d8d3c54ab57bf2bf31945ee, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
@@ -68,7 +68,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ScrollingSpeedX: 1
+    - _ScrollingSpeedX: 1.5
     - _ScrollingSpeedY: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

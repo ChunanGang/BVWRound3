@@ -7,11 +7,16 @@ public class PlayerController : MonoBehaviour
     // ref
     public Rigidbody2D playerRB;
     public GameObject bulletPrefab;
+    public Manager manager;
     public SpriteRenderer playerSprite;
 
     // Game logic
-    private float screenTopX = 4.4f, screenBotX = -4.4f; // boudary of the screnn
+    public float hpDecrSpeed; // lose this much hp each sec
+    private float screenTopY = 4.2f, screenBotY = -4.2f; // boudary of the screnn
+    private float screenLeftX = -8.3f, screenRightX = 2.5f; // boudary of the screnn
     public float moveSpeed;
+    public float attackInterval;
+    private bool canAttack = true; // only can attack after some interval
     private int currentBulletType = 0;
     public float maxHP;
     private float curHP;
@@ -22,13 +27,29 @@ public class PlayerController : MonoBehaviour
     { 
         curHP = maxHP;
     }
-   
-    // this function will be called in gameManager.cs
-    public void move(float dir)
+    private void LateUpdate()
     {
-        // only move within boudary
-        if ((transform.position.y <= screenTopX || dir <0)  && (transform.position.y >= screenBotX || dir > 0))
-            playerRB.velocity = Vector3.up * dir * moveSpeed;
+        if(manager.gameStarted)
+            curHP -= Time.deltaTime * hpDecrSpeed;
+    }
+
+    // this function will be called in gameManager.cs
+    public void move(int dir)
+    {
+        // move up (1) / down (-1)
+        if (dir == 1 || dir == -1)
+        {
+            // only move within boudary
+            if ((transform.position.y <= screenTopY || dir < 0) && (transform.position.y >= screenBotY || dir > 0))
+                playerRB.velocity = Vector3.up * dir * moveSpeed;
+        }
+        // move left (-2) / right (2)
+        else
+        {
+            // only move within boudary
+            if ((transform.position.x <= screenRightX || dir < 0) && (transform.position.x >= screenLeftX || dir > 0))
+                playerRB.velocity = Vector3.right * dir/2 * moveSpeed;
+        }
     }
 
     // this function will be called in gameManager.cs
@@ -40,6 +61,8 @@ public class PlayerController : MonoBehaviour
     // this function will be called in gameManager.cs
     public void attack()
     {
+        if (!canAttack)
+            return; 
         // check how many bullets left
         if (bulletLeft == 0) {
             // stwitch back to back attack if no bullet left
@@ -53,13 +76,21 @@ public class PlayerController : MonoBehaviour
         Quaternion rotation = transform.rotation;
         GameObject bullet = Instantiate(bulletPrefab, pos, rotation);
         bullet.GetComponent<BulletController>().setType(currentBulletType);
+        // set attack cd
+        canAttack = false;
+        Invoke("setCanAttack", attackInterval);
+    }
+
+    void setCanAttack()
+    {
+        canAttack = true;
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         //print(col.gameObject.tag);
         // stop the movement when hit hte wall
-        if (col.gameObject.CompareTag("Wall"))
+        if (col.gameObject.CompareTag("Boudary"))
         {
             stop();
         }
@@ -79,9 +110,15 @@ public class PlayerController : MonoBehaviour
     // change the curBullet type of the player (called when hit by an item) 
     public void changeBullet(int type, int bulletAmount)
     {
-        print("---change to bullt" + type);
-        currentBulletType = type;
-        bulletLeft = bulletAmount;
+        // alrady in type, add bullet amount
+        if (currentBulletType == type)
+            bulletLeft += bulletAmount;
+        // otherwise change type
+        else
+        {
+            currentBulletType = type;
+            bulletLeft = bulletAmount;
+        }
     }
 
     // do damage to player

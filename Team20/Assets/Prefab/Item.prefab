@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7092236952436810168}
   - component: {fileID: -4820452353968756374}
   m_Layer: 0
-  m_Name: Syringe
+  m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +112,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.11452365, y: -0.52911747}

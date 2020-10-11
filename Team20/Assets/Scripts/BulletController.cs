@@ -8,14 +8,16 @@ public class BulletController : MonoBehaviour
     private BossController boss;
     private PlayerController player1; 
     private PlayerController player2;
+    public GameObject bombEffect;
     public Sprite[] BulletSprites;
 
     // game logic
     private int bulletType = -1; // we will have diff typesof bullet. -1 means no type set yet; boss have type 1
 
     // ----------- BULLETS ----------
-    // bullet 0: normal bullet
+    // bullet 0: player normal bullet
     // bullet 1: Boss's normal bullet
+    // bullet 2: player strong bullet
     public float[] bulletsDMG;
     public float[] bulletsSpeed;
 
@@ -62,6 +64,13 @@ public class BulletController : MonoBehaviour
         {
             boss.doDamage(bulletsDMG[bulletType]);
             Destroy(gameObject);
+            // if is strong bullet
+            if(bulletType == 2)
+            {
+                // play bomb effect
+                Instantiate(bombEffect, transform.position, transform.rotation);
+            }
+
         }
         else if (col.gameObject.CompareTag("player1") && bulletShooter() == 1)
         {

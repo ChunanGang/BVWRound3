@@ -12,9 +12,11 @@ public class Manager : MonoBehaviour
 	public CanvasController canvas;
 
 	// game logic 
+	public int gameStage = 0; // 0: start menu, 1: playing video; 2: in game
 	public bool gameStarted = false;
 	public bool player1Ready = false;
 	public bool player2Ready = false;
+	private string ccurMoveDir;
 
 #if !DISABLE_AIRCONSOLE
 
@@ -40,7 +42,10 @@ public class Manager : MonoBehaviour
 		{
 			if (AirConsole.instance.GetControllerDeviceIds().Count < 2)
 			{
-				canvas.setGameInfo("Need 2 players");
+				if (AirConsole.instance.GetControllerDeviceIds().Count == 0)
+					canvas.setGameInfo("No player connected");
+				else if (AirConsole.instance.GetControllerDeviceIds().Count == 1)
+					canvas.setGameInfo("Need one more player");
 			}
 			else
 			{
@@ -69,7 +74,7 @@ public class Manager : MonoBehaviour
 			{
 				AirConsole.instance.SetActivePlayers(0);
 				gameStarted = false;
-				canvas.setGameInfo("PlayerLeft. Waiiting for more Plyers");
+				canvas.setGameInfo("PlayerLeft. Waiiting for more players");
 			}
 			gameStarted = false;
 			player1Ready = false;
@@ -85,44 +90,65 @@ public class Manager : MonoBehaviour
 	/// The message if sent by controller.html
 	void OnMessage(int device_id, JToken data)
 	{
+		// only recive message when in ga,e stage 2
+		if (gameStage != 2)
+			return;
+
 		int active_player = AirConsole.instance.ConvertDeviceIdToPlayerNumber(device_id);
 		// check player valid
 		if (active_player != -1)
 		{
 			if (active_player == 0 || active_player == 1)
-			{		
-				// release
-				if (!(bool)data["data"]["pressed"])
-					players[active_player].stop();
-				// press
-				else
-				{
-					// attack button
-					if ((float)data["data"]["attack"] == 1)
+			{	
+				// --- attack button pressed --- //
+				if((string)data["element"] == "attackButton" )
+                {
+					// use for player ready
+					if (!gameStarted)
 					{
-						// use for player ready
-						if (!gameStarted)
+						if (active_player == 0 && !player1Ready)
+							player1Ready = true;
+						else if (active_player == 1 && !player2Ready)
+							player2Ready = true;
+						// start game if both ready
+						if (player1Ready && player2Ready)
 						{
-							if (active_player == 0 && !player1Ready)
-								player1Ready = true;
-							else if (active_player == 1 && !player2Ready)
-								player2Ready = true;
-							// start game if both ready
-							if (player1Ready && player2Ready)
-							{
-								gameStarted = true;
-								canvas.setGameInfo("");
-							}
+							gameStarted = true;
+							canvas.setGameInfo("");
 						}
-						// attck in game
-						else
-							players[active_player].attack();
 					}
-					// movement
+					// attck in game
 					else
-						players[active_player].move((float)data["data"]["move"]);
+						players[active_player].attack();
 				}
-				
+
+				// --- movepad pressed --- //
+				else if ((string)data["element"] == "movepad")
+                {
+					// release
+					if (!(bool)data["data"]["pressed"])
+					{
+						string value = data["data"].First.ToObject<string>();
+						if(value == ccurMoveDir)
+							players[active_player].stop();
+					}
+					// press -> movement
+					else
+					{
+						ccurMoveDir = (string)data["data"]["key"];
+						if (ccurMoveDir == "up")
+							players[active_player].move(1);
+						else if (ccurMoveDir == "down")
+							players[active_player].move(-1);
+						else if (ccurMoveDir == "left")
+							players[active_player].move(-2);
+						else if (ccurMoveDir == "right")
+							players[active_player].move(2);
+
+					}
+
+				}
+					
 			}
 		}
 	}
