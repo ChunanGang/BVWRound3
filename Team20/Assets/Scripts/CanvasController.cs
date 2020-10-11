@@ -40,6 +40,8 @@ public class CanvasController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Debug.Log("here");
+        //audioController.AC.PlayPlayer1("player1Att");
         audioController.AC.PlayBgm("bgm");
         initVolume = GetComponent<AudioSource>().volume;
 

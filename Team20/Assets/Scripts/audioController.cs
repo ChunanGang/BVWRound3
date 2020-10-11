@@ -25,10 +25,10 @@ public class audioController : MonoBehaviour
         boss.loop = false;
         sounds = new Dictionary<string, AudioClip>();
         sounds.Add("bgm", Resources.Load("windowbgm", typeof(AudioClip)) as AudioClip);
-        sounds.Add("player1Ult", Resources.Load("Chatacter1_ULT", typeof(AudioClip)) as AudioClip);
-        sounds.Add("player2Ult", Resources.Load("Chatacter2_ULT", typeof(AudioClip)) as AudioClip);
-        sounds.Add("player1Att", Resources.Load("Chatacter1_Attact", typeof(AudioClip)) as AudioClip);
-        sounds.Add("player2Att", Resources.Load("Chatacter2_Get", typeof(AudioClip)) as AudioClip);
+        sounds.Add("player1Ult", Resources.Load("Character1_ULT", typeof(AudioClip)) as AudioClip);
+        sounds.Add("player2Ult", Resources.Load("Character2_ULT", typeof(AudioClip)) as AudioClip);
+        sounds.Add("player1Att", Resources.Load("Character1_Attact", typeof(AudioClip)) as AudioClip);
+        sounds.Add("player2Att", Resources.Load("Character2_Get", typeof(AudioClip)) as AudioClip);
         sounds.Add("itemCollect", Resources.Load("Get_ULT", typeof(AudioClip)) as AudioClip);
         sounds.Add("mouseClick", Resources.Load("Mouse_Click", typeof(AudioClip)) as AudioClip);
         sounds.Add("mouseMove", Resources.Load("Mouse_Move", typeof(AudioClip)) as AudioClip);
@@ -44,7 +44,9 @@ public class audioController : MonoBehaviour
 
     public void PlayPlayer1(string soundID, float vol = 0.5f)
     {
+        Debug.Log("playplayer1 called here");
         AudioClip clip = sounds[soundID];
+        Debug.Log(clip);
         player1.PlayOneShot(clip, vol);
     }
 

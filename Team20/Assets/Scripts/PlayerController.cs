@@ -74,6 +74,25 @@ public class PlayerController : MonoBehaviour
         // gen bullet at player's location
         Vector3 pos = transform.position + new Vector3(0.5f,0,0);
         Quaternion rotation = transform.rotation;
+        //attack audio
+        Debug.Log("bullet type" + currentBulletType);
+        if(gameObject.tag == "player1"){
+            Debug.Log("Here! inside player1");
+            if(currentBulletType == 0){
+                audioController.AC.PlayPlayer1("player1Att");
+            }
+            else if(currentBulletType == 2){
+                audioController.AC.PlayPlayer1("player1Ult");
+            }
+        }
+        else if(gameObject.tag == "player2"){
+            if(currentBulletType == 0){
+                audioController.AC.PlayPlayer2("player2Att");
+            }
+            else if(currentBulletType == 2){
+                audioController.AC.PlayPlayer2("player2Ult");
+            }
+        }
         GameObject bullet = Instantiate(bulletPrefab, pos, rotation);
         bullet.GetComponent<BulletController>().setType(currentBulletType);
         // set attack cd
