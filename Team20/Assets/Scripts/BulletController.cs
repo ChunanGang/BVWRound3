@@ -13,7 +13,8 @@ public class BulletController : MonoBehaviour
 
     // game logic
     private int bulletType = -1; // we will have diff typesof bullet. -1 means no type set yet; boss have type 1
-
+    private bool isBossBool = false;
+    private float shootAngle = 0f;
     // ----------- BULLETS ----------
     // bullet 0: player normal bullet
     // bullet 1: Boss's normal bullet
@@ -44,12 +45,30 @@ public class BulletController : MonoBehaviour
 
     void move()
     {
-        if (bulletType == 0)
-            transform.Translate(Vector3.right * bulletsSpeed[0] * Time.deltaTime);
-        else if(bulletType == 1)
-            transform.Translate(-1 * Vector3.right * bulletsSpeed[1] * Time.deltaTime);
-        else if (bulletType == 2)
-            transform.Translate( Vector3.right * bulletsSpeed[2] * Time.deltaTime);
+        if(!isBossBool){
+            if (bulletType == 0)
+                transform.Translate(Vector3.right * bulletsSpeed[0] * Time.deltaTime);
+            else if(bulletType == 1)
+                transform.Translate(-1 * Vector3.right * bulletsSpeed[1] * Time.deltaTime);
+            else if (bulletType == 2)
+                transform.Translate( Vector3.right * bulletsSpeed[2] * Time.deltaTime);
+        }
+        //game logic of the boss bullets
+        else{
+            //Debug.Log("shootAngle" + shootAngle);
+            if((0 <= shootAngle) && (shootAngle <= Mathf.PI/2)){
+                Vector3 moveVector = new Vector3( - Mathf.Cos(shootAngle),  Mathf.Sin(shootAngle),0);
+                transform.Translate(moveVector * bulletsSpeed[1] * Time.deltaTime);
+            }
+            //Creates the reflection of the bullets
+            else{
+                Debug.Log("I am here");
+                shootAngle = - shootAngle;
+                Debug.Log("reverted angle = " + shootAngle);
+                Vector3 moveVector = new Vector3( - Mathf.Cos(shootAngle), - Mathf.Sin(shootAngle),0);
+                transform.Translate(moveVector * bulletsSpeed[1] * Time.deltaTime);
+            }
+        }
 
     }
 
@@ -95,5 +114,13 @@ public class BulletController : MonoBehaviour
         
         else            
             return 0;
+    }
+
+    public void isBoss(){
+        isBossBool = true; 
+    }
+
+    public void setAngle(float curAngle){
+        shootAngle = curAngle;
     }
 }
