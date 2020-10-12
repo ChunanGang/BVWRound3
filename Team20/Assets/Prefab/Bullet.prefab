@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2605489671319707537}
-  m_LocalRotation: {x: -0, y: -0, z: -0.8547209, w: 0.5190879}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.996, y: -0.969, z: 0}
   m_LocalScale: {x: 0.72941643, y: 0.6857333, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -117.45801}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3092763572220526478
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 658e3cbaebcabe54fa3484bc714c9df5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c0c4fbc5cab4b784292ad70d38293b2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,17 +98,23 @@ MonoBehaviour:
   bombEffect: {fileID: 5136799105411283217, guid: 0b906fd68c25c6c45b47a3ed2ba262bc,
     type: 3}
   BulletSprites:
-  - {fileID: 21300000, guid: 658e3cbaebcabe54fa3484bc714c9df5, type: 3}
-  - {fileID: 21300000, guid: 16a7897f253602948a27f80c85258709, type: 3}
-  - {fileID: 21300000, guid: d8b2d680ba7982545908c819018d2a43, type: 3}
+  - {fileID: 21300000, guid: a38adf4fff8ed6c4b84661dba505a91f, type: 3}
+  - {fileID: 21300000, guid: a5e1577e347d5904ead52c7d9074aeae, type: 3}
+  - {fileID: 21300000, guid: 8f0c24336964df446bed2e52cfb8cd52, type: 3}
+  - {fileID: 21300000, guid: e5a77f15476e66a458ba1d505f1c5c1d, type: 3}
+  - {fileID: 21300000, guid: c0c4fbc5cab4b784292ad70d38293b2b, type: 3}
   bulletsDMG:
+  - 15
   - 5
+  - 15
   - 5
   - 15
   bulletsSpeed:
+  - 6
   - 10
+  - 15
   - 10
-  - 10
+  - 15
 --- !u!61 &6430560065644158001
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -126,7 +132,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.3303226, y: 0.32}
+    oldSize: {x: 3.13, y: 0.7}
     newSize: {x: 0.3303226, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
