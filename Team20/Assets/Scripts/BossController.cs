@@ -75,7 +75,24 @@ public class BossController : MonoBehaviour
                 gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.up * moveDirection * moveSpeed;
                 // ======== attack here ========= //
                 int attackType = Random.Range(0,5);
-                if (attackType == 0)
+                //this  is the threshold to do flower attack and aiming attack
+                //boss does more flower attack when the health is low
+                int threshold = 0;
+                float healthRatio = curHP / maxHP;
+                if((healthRatio < 0.6f) && (healthRatio > 0.3f)) {
+                    //half health
+                    threshold = 1;
+                }
+                else if(healthRatio <= 0.3f){
+                    //in danger
+                    threshold = 2;
+                }
+                else{
+                    //full health
+                    threshold = 0;
+                }
+                
+                if (attackType <= threshold)
                 {
                     // --- flower bullets attack --- //
                     float rotateAngle = 8;
