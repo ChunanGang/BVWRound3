@@ -11,26 +11,46 @@ public class PlayerController : MonoBehaviour
     public SpriteRenderer playerSprite;
 
     // Game logic
+    public int playerID;
     public float hpDecrSpeed; // lose this much hp each sec
     private float screenTopY = 4.2f, screenBotY = -4.2f; // boudary of the screnn
     private float screenLeftX = -8.3f, screenRightX = 2.5f; // boudary of the screnn
     public float moveSpeed;
     public float attackInterval;
     private bool canAttack = true; // only can attack after some interval
-    private int currentBulletType = 0;
+    private int currentBulletType;
+    private int normalBulletType;
     public float maxHP;
     private float curHP;
     private int bulletLeft; // how many bullet lefy (-1 means infinite)
+    private Vector3 initPos;
+    private bool dead;
 
     // Start is called before the first frame update
     void Start()
     { 
         curHP = maxHP;
+        initPos = transform.position;
+        if(playerID == 1)
+            currentBulletType = 1;
+        else
+            currentBulletType = 3;
+        normalBulletType = currentBulletType;
+        bulletLeft = -1;
     }
     private void LateUpdate()
     {
         if(manager.gameStarted)
             curHP -= Time.deltaTime * hpDecrSpeed;
+        // check if dead
+        if(curHP <= 0 && manager.gameStarted && !dead)
+        {
+            print("disavtive player " + playerID);
+            dead = true;
+            manager.setPlayerDead(playerID);
+            gameObject.SetActive(false);
+        }
+
     }
 
     // this function will be called in gameManager.cs
@@ -52,6 +72,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void resetStatus()
+    {
+        //print("reste player " + playerID);
+        gameObject.SetActive(true);
+        curHP = maxHP;
+        transform.position = initPos;
+        currentBulletType = normalBulletType;
+        playerSprite.color = Color.white;
+        bulletLeft = -1;
+        dead = false;
+    }
+
     // this function will be called in gameManager.cs
     public void stop()
     {
@@ -67,7 +99,7 @@ public class PlayerController : MonoBehaviour
         if (bulletLeft == 0) {
             // stwitch back to back attack if no bullet left
             bulletLeft = -1;
-            currentBulletType = 0;
+            currentBulletType = normalBulletType;
         }
         if(bulletLeft > 0)
             bulletLeft--;
@@ -76,20 +108,21 @@ public class PlayerController : MonoBehaviour
         Quaternion rotation = transform.rotation;
         //attack audio
         //Debug.Log("bullet type" + currentBulletType);
-        if(gameObject.tag == "player1"){
+        if(playerID == 1){
             //Debug.Log("Here! inside player1");
-            if(currentBulletType == 0){
+            if(currentBulletType == 1){
                 audioController.AC.PlayPlayer1("player1Att");
             }
             else if(currentBulletType == 2){
                 audioController.AC.PlayPlayer1("player1Ult");
             }
         }
-        else if(gameObject.tag == "player2"){
-            if(currentBulletType == 0){
+        else if(playerID == 2)
+        {
+            if(currentBulletType == 3){
                 audioController.AC.PlayPlayer2("player2Collect");
             }
-            else if(currentBulletType == 2){
+            else if(currentBulletType == 4){
                 audioController.AC.PlayPlayer2("player2Ult");
             }
         }
@@ -117,7 +150,7 @@ public class PlayerController : MonoBehaviour
 
     public void heal(float healAmount){
         float updatedHPTemp = curHP + healAmount;
-        Debug.Log(updatedHPTemp);
+        //Debug.Log(updatedHPTemp);
         if(updatedHPTemp > maxHP){
             curHP = maxHP;
         }
@@ -127,15 +160,15 @@ public class PlayerController : MonoBehaviour
     }
 
     // change the curBullet type of the player (called when hit by an item) 
-    public void changeBullet(int type, int bulletAmount)
+    public void changeBullet(int bulletAmount)
     {
-        // alrady in type, add bullet amount
-        if (currentBulletType == type)
+        // alrady in strong bullet, add bullet amount
+        if (currentBulletType == 2 || currentBulletType == 4)
             bulletLeft += bulletAmount;
         // otherwise change type
         else
         {
-            currentBulletType = type;
+            currentBulletType ++ ; // 1 become 2; 3 become 4
             bulletLeft = bulletAmount;
         }
     }
@@ -143,11 +176,8 @@ public class PlayerController : MonoBehaviour
     // do damage to player
     public void doDamage(float dmg)
     {
-        if(curHP > dmg){
+        if(curHP > 0){
             curHP -= dmg;
-        }
-        else{
-            //Debug.Log("This player is dead. ");
         }
         StartCoroutine(damaged());
     }

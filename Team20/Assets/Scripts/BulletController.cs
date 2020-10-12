@@ -5,28 +5,23 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     // ref
-    private BossController boss;
-    private PlayerController player1; 
-    private PlayerController player2;
     public GameObject bombEffect;
     public Sprite[] BulletSprites;
 
     // game logic
     private int bulletType = -1; // we will have diff typesof bullet. -1 means no type set yet; boss have type 1
-    private bool isBossBool = false;
     private float shootAngle = 0f;
     // ----------- BULLETS ----------
-    // bullet 0: player normal bullet
-    // bullet 1: Boss's normal bullet
-    // bullet 2: player strong bullet
+    // bullet 0: Boss's normal bullet
+    // bullet 1: player1 normal bullet
+    // bullet 2: player1 strong bullet
+    // bullet 3: player2 normal bullet
+    // bullet 4: player2 strong bullet
     public float[] bulletsDMG;
     public float[] bulletsSpeed;
 
     private void Start()
     {
-        boss = GameObject.Find("Boss").GetComponent<BossController>();
-        player1 = GameObject.Find("player1").GetComponent<PlayerController>();
-        player2 = GameObject.Find("player2").GetComponent<PlayerController>();
     }
     void Update()
     {
@@ -45,6 +40,7 @@ public class BulletController : MonoBehaviour
 
     void move()
     {
+        /*
         if(!isBossBool){
             if (bulletType == 0)
                 transform.Translate(Vector3.right * bulletsSpeed[0] * Time.deltaTime);
@@ -68,7 +64,14 @@ public class BulletController : MonoBehaviour
                 Vector3 moveVector = new Vector3( - Mathf.Cos(shootAngle), - Mathf.Sin(shootAngle),0);
                 transform.Translate(moveVector * bulletsSpeed[1] * Time.deltaTime);
             }
-        }
+        }  */
+
+        // players' bullet move right
+        if (bulletType == 1 || bulletType == 2 || bulletType == 3 || bulletType == 4)
+            transform.Translate(Vector3.right * bulletsSpeed[bulletType] * Time.deltaTime);
+        // boss's bullet move right
+        if (bulletType == 0)
+            transform.Translate(Vector3.left * bulletsSpeed[bulletType] * Time.deltaTime);
 
     }
 
@@ -79,26 +82,41 @@ public class BulletController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        // players' bullets hit boss
         else if (col.gameObject.CompareTag("Boss") && bulletShooter()==0)
         {
-            boss.doDamage(bulletsDMG[bulletType]);
+            col.gameObject.GetComponent<BossController>().doDamage(bulletsDMG[bulletType]);
             Destroy(gameObject);
             // if is strong bullet
-            if(bulletType == 2)
+            if(bulletType == 2 || bulletType ==4)
             {
                 // play bomb effect
                 Instantiate(bombEffect, transform.position, transform.rotation);
             }
 
         }
-        else if (col.gameObject.CompareTag("player1") && bulletShooter() == 1)
+        // players' bullets hit Minions
+        else if (col.gameObject.CompareTag("Minion") && bulletShooter() == 0)
         {
-            player1.heal(bulletsDMG[bulletType]);
+            col.gameObject.GetComponent<MinionsController>().doDamage(bulletsDMG[bulletType]);
             Destroy(gameObject);
+            // if is strong bullet
+            if (bulletType == 2 || bulletType == 4)
+            {
+                // play bomb effect
+                Instantiate(bombEffect, transform.position, transform.rotation);
+            }
+
         }
+        // enemies's bullets hit playetrs
         else if (col.gameObject.CompareTag("player2") && bulletShooter() == 1)
         {
-            player2.doDamage(bulletsDMG[bulletType]);
+            col.gameObject.GetComponent<PlayerController>().heal(bulletsDMG[bulletType]);
+            Destroy(gameObject);
+        }
+        else if (col.gameObject.CompareTag("player1") && bulletShooter() == 1)
+        {
+            col.gameObject.GetComponent<PlayerController>().doDamage(bulletsDMG[bulletType]);
             Destroy(gameObject);
         }
     }
@@ -107,17 +125,13 @@ public class BulletController : MonoBehaviour
     int bulletShooter()
     {
         // boss
-        if(bulletType == 1)
+        if(bulletType == 0)
         {
             return 1;
         }
         
         else            
             return 0;
-    }
-
-    public void isBoss(){
-        isBossBool = true; 
     }
 
     public void setAngle(float curAngle){

@@ -8,12 +8,13 @@ public class BossController : MonoBehaviour
     public SpriteRenderer bossSprite;
     public GameObject bulletPrefab;
     public Manager manager;
+    public Transform player1;
 
     // game logic
     public float maxHP;
     private float curHP;
     public float stage2HP;
-    private int currentBulletType = 1;
+    private int currentBulletType = 0;
 
     private bool deathAudioPlayed = false; 
     // Start is called before the first frame update
@@ -33,6 +34,12 @@ public class BossController : MonoBehaviour
                 }
             }
         }
+    }
+    public void resetStatus()
+    {
+        curHP = maxHP;
+        bossSprite.color = Color.white;
+        StartCoroutine(fireAndMove());
     }
 
     public float getHP()
@@ -55,7 +62,53 @@ public class BossController : MonoBehaviour
         bossSprite.color = Color.white;
     }
 
-    IEnumerator fireAndMove(){
+    IEnumerator fireAndMove()
+    {
+        while (curHP > 0)
+        {
+            if (manager.gameStarted)
+            {
+                // ======== movement here =========== //
+                //TODO
+
+
+                // ======== attack here ========= //
+                int attackType = Random.Range(0,5);
+                if (attackType == 0)
+                {
+                    // --- flower bullets attack --- //
+                    float rotateAngle = 8;
+                    // each wave (separate by time)
+                    for (int i = 0; i < 15; i++)
+                    {
+                        // eahc line (saperate by angle)
+                        for (int j = 0; j < 6; j++)
+                        {
+                            float curAngle = i * rotateAngle + j * 60;
+                            Vector3 pos = transform.position;
+                            Quaternion rotation = Quaternion.Euler(0, 0, curAngle);
+                            GameObject bullet = Instantiate(bulletPrefab, pos, rotation);
+                            bullet.GetComponent<BulletController>().setType(currentBulletType);
+                        }
+
+                        yield return new WaitForSeconds(.1f);
+                    }
+                    // ---- flower attack done --- //
+                }
+                else 
+                {
+                    // --- animing attack here --- //
+                    GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+                    // anim at player 1 (since he got dmg fro mbullet)
+                    bullet.transform.right = transform.position - player1.position;
+                    bullet.GetComponent<BulletController>().setType(currentBulletType);
+                    // --- animing attack done --- //
+                }
+            }
+            yield return new WaitForSeconds(.8f);
+        }
+
+        /*
     	//Direction constant, 1 up, -1 down
     	int curDirection = 1;
         //How many iterations in one flower
@@ -119,7 +172,11 @@ public class BossController : MonoBehaviour
                 iterationCtr = 0;
             }
             yield return new WaitForSeconds(.8f);
-        }
+        }*/
+
+
+
+
     }
 
 
