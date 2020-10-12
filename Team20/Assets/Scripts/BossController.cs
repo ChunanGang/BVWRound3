@@ -15,6 +15,7 @@ public class BossController : MonoBehaviour
     private float curHP;
     public float stage2HP;
     private int currentBulletType = 0;
+    public float moveSpeed = 0.5f;
 
     private bool deathAudioPlayed = false; 
     // Start is called before the first frame update
@@ -64,14 +65,14 @@ public class BossController : MonoBehaviour
 
     IEnumerator fireAndMove()
     {
+        //this is the indicator of the move direction, if 1 up, -1 down
+        int moveDirection = 1; 
         while (curHP > 0)
         {
             if (manager.gameStarted)
             {
                 // ======== movement here =========== //
-                //TODO
-
-
+                gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.up * moveDirection * moveSpeed;
                 // ======== attack here ========= //
                 int attackType = Random.Range(0,5);
                 if (attackType == 0)
@@ -105,6 +106,7 @@ public class BossController : MonoBehaviour
                     // --- animing attack done --- //
                 }
             }
+            moveDirection = moveDirection * (-1);
             yield return new WaitForSeconds(.8f);
         }
 
