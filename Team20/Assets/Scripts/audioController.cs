@@ -73,4 +73,18 @@ public class audioController : MonoBehaviour
         bgm.PlayOneShot(clip, vol);
     }
 
+    public void muteAll(){
+        bgm.volume = 0; 
+        player1.volume = 0;
+        player2.volume = 0; 
+        boss.volume =0;
+    }
+
+    public void unmuteAll(){
+        bgm.volume = 0.5f; 
+        player1.volume = 0.5f;
+        player2.volume = 0.5f; 
+        boss.volume =0.5f;
+    }
+
 }
