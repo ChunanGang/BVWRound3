@@ -76,10 +76,34 @@ public class CanvasController : MonoBehaviour
     void updateHP()
     {
         // boss (tutorial boss or real boss)
-        if (manager.gameStage == 2)
+        if (manager.gameStage == 2){
             bossHPTop.fillAmount = tutorialBoss.getHP() / tutorialBoss.maxHP;
-        else
+            float fraction = tutorialBoss.getHP() / tutorialBoss.maxHP;
+            Debug.Log("fraction" + fraction);
+            if(fraction > 0.6f){
+                bossHPTop.GetComponent<Image>().color = new Color32(245, 201, 112, 255);
+            }
+            if(fraction< 0.6f){
+                bossHPTop.GetComponent<Image>().color = new Color32(28, 233, 217, 255);
+            }
+            if(fraction < 0.3f){
+                bossHPTop.GetComponent<Image>().color = Color.red;
+            }
+        }
+
+        else{
             bossHPTop.fillAmount = boss.getHP() / boss.maxHP;
+            float fraction = boss.getHP() / boss.maxHP;
+            if(fraction > 0.6f){
+                bossHPTop.GetComponent<Image>().color = new Color32(245, 201, 112, 255);
+            }
+            if(fraction < 0.6f){
+                bossHPTop.GetComponent<Image>().color = new Color32(28, 233, 217, 255);
+            }
+            if(fraction < 0.3f){
+                bossHPTop.GetComponent<Image>().color = Color.red;
+            }
+        }
 
         player1HPTop.fillAmount = player1.getHP() / player1.maxHP;
         player2HPTop.fillAmount = player2.getHP() / player2.maxHP;
