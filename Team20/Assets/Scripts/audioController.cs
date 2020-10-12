@@ -18,7 +18,6 @@ public class audioController : MonoBehaviour
     void Awake()
     {
         AC = this;
-
         bgm.loop = true;
         player1.loop = false;
         player2.loop = false;
@@ -70,7 +69,9 @@ public class audioController : MonoBehaviour
     public void PlayBgm(string soundID, float vol = 0.5f){
         bgm.Stop();
     	AudioClip clip = sounds[soundID];
-        bgm.PlayOneShot(clip, vol);
+        bgm.clip = clip;
+        bgm.volume = 0.5f;
+        bgm.Play();
     }
 
     public void muteAll(){
